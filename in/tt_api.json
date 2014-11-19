@@ -1,0 +1,1747 @@
+{
+  "_version": "2.1",
+  "metadata": [
+    {
+      "name": "FORMAT",
+      "value": "1A"
+    }
+  ],
+  "name": "TrunkTrunk",
+  "description": "The TrunkTrunk API provides the backend of the TrunkTrunk blogging platform.\n",
+  "resourceGroups": [
+    {
+      "name": "Posts",
+      "description": "Posts (articles).\n\nA Post resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier\n\n- **UserId**: (int, required) Id of the user who owns/created the posts.\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **UpdatedAt**: (datetime, required) The latest time of modification of the resource\n\n- **Title**: (string, required) The post title\n\n- **Content**: (string, required) The post content (the text of the article)\n\n- **Tags**: (list of strings, required) List of unique post tags (strings) describing the post\n\n- **ImageUrl**: (string, option) Url of the post image\n\n- **ImageCaption**: (string, optional) The caption of the post image\n\n- **Price**: (decimal, required) The price of the post. If set to 0.0, the post is free.\n\n- **NewsquidProductId**: (int, optional) The integer of the product in NEWSQUID corresponding to the post, if such a product exists.\n\n- **DraftRevisionId**: (int, required) The revision number of the newest post revision.\n\n- **PublishedRevisionId**: (int, optional) The revision number of the post revision currently published. I 0, the post is not published.\n\n- **GroupId**: (int, optional) The id of the group to which the post belong. If set to 0, the post is considered part of no group.\n\nThe attributes *Id*, *Revision*, *CreatedAt*, *UpdatedAt*, *OwnerId*, *DraftRevisionId*, and *PublishedRevisionId* are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
+        {
+          "name": "-> /posts",
+          "description": "",
+          "uriTemplate": "/posts",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Create a new post. The post is not published per default.\n\nAny signed in user can create a post.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"GroupId\": 0\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 1, \n  \"PublishedRevisionId\": 0,\n  \"GroupId\": 0\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "description": "Update a post. The changes are saved as a draft and are not published. If a\nprevious version of the post is published, this remains the case (the published\nversion of post is not altered).\n\nOnly the creator of the post or any user in the group to which the post belongs can update a post.\n\n",
+              "method": "PUT",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 1, \n  \"PublishedRevisionId\": 1,\n  \"GroupId\": 0\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 1,\n  \"GroupId\": 0\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/publish",
+          "description": "",
+          "uriTemplate": "/posts/publish",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Update",
+              "description": "Update a post. the changes are published. If a previous version of the post is\nalready published, the previous version is replaced with the new version.\n\nOnly the creator of the post or any user in the group to which the post belongs can update a post.\n\n",
+              "method": "PUT",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 1, \n  \"PublishedRevisionId\": 1,\n  \"GroupId\": 0\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 0\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/{id}",
+          "description": "",
+          "uriTemplate": "/posts/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the Post.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get the latest published version of the post with the given id.\n\nAnyone can get a post by its id. It does not require that the caller is signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"UserId\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1<br /><br />And a guy!<img src='https://ttmediafiles.s3.amazonaws.com/uploads/inline_media/9/Sk__rmbillede_2014-02-14_kl._12.08.59.png'>\",\n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"https://ttmediafiles.s3.amazonaws.com/uploads/media/150/article-main-image\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 1, \n  \"PublishedRevisionId\": 1,\n  \"GroupId\": 1\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Delete",
+              "description": "Delete the post with the given id.\n\nOnly the creator of the post or any user in the group to which the post belongs can delete a post.\n\n",
+              "method": "DELETE",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "204",
+                      "description": "",
+                      "headers": [],
+                      "body": "",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/{id}/draft",
+          "description": "",
+          "uriTemplate": "/posts/{id}/draft",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the Post.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get the latest draft of the post with the given id.\n\nOnly the creator of the post or any user in the group to which the post belongs can get the latest draft of a post.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 5, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 0\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/user/{id}",
+          "description": "",
+          "uriTemplate": "/posts/user/{id}{?items_per_page,page}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the user.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "items_per_page",
+              "description": "How many posts to return per request.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "page",
+              "description": "How many *items_per_page* to skip.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get all published posts of the user with the given id.\n\nAnyone get do this request. It does not require that the caller is signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 3, \n  \"PublishedRevisionId\": 3,\n  \"GroupId\": 2\n}, {\n  \"Id\": 2, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 2\", \n  \"Content\": \"Content of Post 2\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"https://ag.arizona.edu/yavapai/graphics/bamboo.jpg\",\n  \"ImageCaption\": \"Image caption of Post 2\",\n  \"Price\": 1.1,\n  \"NewsquidProductId\": 7,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 7\n}]\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/group/{id}",
+          "description": "",
+          "uriTemplate": "/posts/group/{id}{?items_per_page,page}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the group.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "items_per_page",
+              "description": "How many posts to return per request.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "page",
+              "description": "How many *items_per_page* to skip.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get all published posts of the group with the given id.\n\nAnyone get do this request. It does not require that the caller is signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 3, \n  \"PublishedRevisionId\": 3,\n  \"GroupId\": 0\n}, {\n  \"Id\": 2, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 2\", \n  \"Content\": \"Content of Post 2\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"https://ag.arizona.edu/yavapai/graphics/bamboo.jpg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 2.2,\n  \"NewsquidProductId\": 7,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 4\n}]\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/featured",
+          "description": "",
+          "uriTemplate": "/posts/featured",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get all featured posts (the posts that appear on the front page of TrunkTrunk).\n\nAnyone get do this request. It does not require that the caller is signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 3, \n  \"PublishedRevisionId\": 3,\n  \"GroupId\": 0\n}, {\n  \"Id\": 2, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 2\", \n  \"Content\": \"Content of Post 2\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"https://ag.arizona.edu/yavapai/graphics/bamboo.jpg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 3.1,\n  \"NewsquidProductId\": 7,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 0\n}]\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts{?search}",
+          "description": "",
+          "uriTemplate": "/posts{?search,items_per_page,page}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "search",
+              "description": "Search string. The terms with which to search.",
+              "type": "string",
+              "required": true,
+              "default": "",
+              "example": "",
+              "values": []
+            },
+            {
+              "name": "items_per_page",
+              "description": "How many posts to return per request.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "page",
+              "description": "How many *items_per_page* to skip.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Search for posts",
+              "description": "Retrieve all published posts matching the given search parameter (fuzzy\nsearch).\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 3, \n  \"PublishedRevisionId\": 3,\n  \"GroupId\": 3\n}, {\n  \"Id\": 2, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 2\", \n  \"Content\": \"Content of Post 2\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"https://ag.arizona.edu/yavapai/graphics/bamboo.jpg\",\n  \"ImageCaption\": \"Image caption of Post 2\",\n  \"Price\": 0.1,\n  \"NewsquidProductId\": 7,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 0\n}]\nA PostComment resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/comments",
+          "description": "",
+          "uriTemplate": "/posts/comments",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Create a new comment.\n\nAny signed in user is allowed to create a comment.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"PostId\": 1,\n  \"Content\": \"Comment on Post 1\"\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\",\n  \"UpdatedAt\": \"2014-04-18T02:15:15Z\",\n  \"UserId\": 2,\n  \"PostId\": 1,\n  \"Content\": \"Comment on Post 1\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "description": "Update an existing comment.\n\nOnly the creator of a comment can edit it.\n\n",
+              "method": "PUT",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"PostId\": 1,\n  \"Content\": \"Comment on Post 1\"\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\",\n  \"UpdatedAt\": \"2014-04-18T02:15:15Z\",\n  \"UserId\": 2,\n  \"PostId\": 1,\n  \"Content\": \"Comment on Post 1\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/comments/{id}",
+          "description": "",
+          "uriTemplate": "/posts/comments/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the comment.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Delete",
+              "description": "Deletes the comment with the given id.\n\nOnly the creator of a comment can delete it.\n\n",
+              "method": "DELETE",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "204",
+                      "description": "",
+                      "headers": [],
+                      "body": "",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/comments/post/{id}",
+          "description": "",
+          "uriTemplate": "/posts/comments/post/{id}{?items_per_page,page}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the post.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "items_per_page",
+              "description": "How many comments to return per request.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "page",
+              "description": "How many *items_per_page* to skip.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Gets all comments to the post with the given id\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [],
+                      "body": "[\n    {\n      \"Id\": 1\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\",\n      \"UpdatedAt\": \"2014-04-18T02:15:15Z\",\n      \"UserId\": 2,\n      \"PostId\": 1,\n      \"Content\": \"Comment on Post 1\"\n    },\n    {\n      \"Id\": 7\n      \"CreatedAt\": \"2014-04-16T02:15:15Z\",\n      \"UpdatedAt\": \"2014-04-16T02:15:15Z\",\n      \"UserId\": 7,\n      \"PostId\": 1,\n      \"Content\": \"Another comment on Post 1\"\n    }\n]\nA User resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /users{?search}",
+          "description": "",
+          "uriTemplate": "/users{?search}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "search",
+              "description": "Search term to matched against email and/or name of users.",
+              "type": "string",
+              "required": true,
+              "default": "",
+              "example": "lars",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Search",
+              "description": "Get a list of users, based on a search on their name and email\n\nAnyone can do this request. The caller does not need to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[\n  {\n    \"Id\": 1, \n    \"NewsquidUserId\": 7, \n    \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n    \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n    \"Name\": \"Lars\",\n    \"Email\": \"user1@example.org\",\n    \"Title\": \"Freelance writer\", \n    \"Description\": \"Description of User 1\",\n    \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n    \"FacebookLink\": \"\",\n    \"TwitterLink\": \"\",\n    \"GooglePlusLink\": \"\",\n    \"LinkedInLink\": \"\",\n    \"WebsiteLink\": \"\"\n  },\n    \"Id\": 1, \n    \"NewsquidUserId\": 8, \n    \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n    \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n    \"Name\": \"User 2\",\n    \"Email\": \"LarsMan@example.org\",\n    \"Title\": \"Freelance writer\", \n    \"Description\": \"Description of User 2\",\n    \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n    \"FacebookLink\": \"\",\n    \"TwitterLink\": \"\",\n    \"GooglePlusLink\": \"\",\n    \"LinkedInLink\": \"\",\n    \"WebsiteLink\": \"\"\n  }\n]\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /users/current",
+          "description": "",
+          "uriTemplate": "/users/current",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get the user currently logged in.\n\nAny signed in user can do this request.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"NewsquidUserId\": 7, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Name\": \"User 1\",\n  \"Email\": \"user1@example.org\",\n  \"Title\": \"Freelance writer\",\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"Description\": \"Description of User 1\",\n  \"FacebookLink\": \"\",\n  \"TwitterLink\": \"\",\n  \"GooglePlusLink\": \"\",\n  \"LinkedInLink\": \"\",\n  \"WebsiteLink\": \"\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "description": "Update the user information of the current user.\n\nAny signed in user can do this request.\n\n",
+              "method": "PUT",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Name\": \"Updated User 1\",\n  \"Email\": \"user1@example.org\",\n  \"Title\": \"Freelance writer\", \n  \"Description\": \"New description of User 1\",\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"FacebookLink\": \"\",\n  \"TwitterLink\": \"\",\n  \"GooglePlusLink\": \"\",\n  \"LinkedInLink\": \"\",\n  \"WebsiteLink\": \"http://www.trunktrunk.com/user1\"\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"NewsquidUserId\": 7, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Name\": \"Updated User 1\",\n  \"Email\": \"user1@example.org\",\n  \"Title\": \"Freelance writer\", \n  \"Description\": \"New description of User 1\",\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"FacebookLink\": \"\",\n  \"TwitterLink\": \"\",\n  \"GooglePlusLink\": \"\",\n  \"LinkedInLink\": \"\",\n  \"WebsiteLink\": \"http://www.trunktrunk.com/user1\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /users/{id}",
+          "description": "",
+          "uriTemplate": "/users/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the user.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get the user with the given id.\n\nAnyone can do this request. The caller does not need to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"NewsquidUserId\": 7, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Name\": \"User 1\",\n  \"Email\": \"user1@example.org\",\n  \"Title\": \"Freelance writer\", \n  \"Description\": \"Description of User 1\",\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"FacebookLink\": \"\",\n  \"TwitterLink\": \"\",\n  \"GooglePlusLink\": \"\",\n  \"LinkedInLink\": \"\",\n  \"WebsiteLink\": \"\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /users/group/{id}",
+          "description": "",
+          "uriTemplate": "/users/group/{id}{?items_per_page,page}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the group.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "items_per_page",
+              "description": "How many users to return per request.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "page",
+              "description": "How many *items_per_page* to skip.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get all users of the group with the given id.\n\nAnyone can do this request. The caller does not need to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[\n    {\n      \"Id\": 1, \n      \"NewsquidUserId\": 7, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"User 1\",\n      \"Email\": \"user1@example.org\",\n      \"Title\": \"Freelance writer\", \n      \"Description\": \"Description of User 1\",\n      \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n      \"FacebookLink\": \"\",\n      \"TwitterLink\": \"\",\n      \"GooglePlusLink\": \"\",\n      \"LinkedInLink\": \"\",\n      \"WebsiteLink\": \"\"\n    },\n    {\n      \"Id\": 3, \n      \"NewsquidUserId\": 23, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"User 3\",\n      \"Email\": \"user3@example.org\",\n      \"Title\": \"Freelance publisher\", \n      \"Description\": \"Description of User 3\",\n      \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n      \"FacebookLink\": \"http://facebook.com/user3\",\n      \"TwitterLink\": \"http://twitter.com/user3\",\n      \"GooglePlusLink\": \"\",\n      \"LinkedInLink\": \"\",\n      \"WebsiteLink\": \"\"\n    }\n]\nA Session resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /users/sessions",
+          "description": "",
+          "uriTemplate": "/users/sessions",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Create a new user session. No request payload is expected. Instead, a valid\nNEWSQUID token is expected to be sent in the *Authorization* HTTP header.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "name": "Authorization",
+                          "value": "QWxhZGRpbjpvcGVuIHNlc2FtZQ"
+                        }
+                      ],
+                      "body": "",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"UserId\": 2,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\",\n  \"UpdatedAt\": \"2014-04-18T02:15:15Z\",\n  \"ExpiresAt\": \"2014-04-18T03:15:15Z\",\n  \"Token\": \"QWxhZGRpbjpvcGVuIHNlc2FtZQ\",\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Delete",
+              "description": "Destroys (expires) the session of the user currently logged in\n\n",
+              "method": "DELETE",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "204",
+                      "description": "",
+                      "headers": [],
+                      "body": "# Group Groups\nGroups of collaborating users of the blogging platform.\n\nA Group resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /groups",
+          "description": "",
+          "uriTemplate": "/groups",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Create a new group.\n\nAny signed in user can create a group.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Name\": \"Group 1 name\",\n  \"Description\": \"Group 1 description\"\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Name\": \"Group 1 name\",\n  \"Description\": \"Group 1 description\",\n  \"UserId\": \"2\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "description": "Update a group.\n\nAny member of the group can update it.\n\n",
+              "method": "PUT",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"Name\": \"New Group 1 name\",\n  \"Description\": \"New Group 1 description\",\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Name\": \"New Group 1 name\",\n  \"Description\": \"New Group 1 description\",\n  \"UserId\": \"2\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /groups/{id}",
+          "description": "",
+          "uriTemplate": "/groups/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the group.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get the group with the given id.\n\nAny user can do this request. The caller does not have to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Name\": \"Group 1 name\",\n  \"Description\": \"Group 1 description\",\n  \"UserId\": \"2\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /groups/user/{id}",
+          "description": "",
+          "uriTemplate": "/groups/user/{id}{?items_per_page,page}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the user.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "items_per_page",
+              "description": "How many groups to return per request.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            },
+            {
+              "name": "page",
+              "description": "How many *items_per_page* to skip.",
+              "type": "number",
+              "required": false,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get a list of the groups where the user with the given id is member.\n\nAny user can do this request. The caller does not have to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[\n    {\n      \"Id\": 1,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"Group 1 name\",\n      \"Description\": \"Group 1 description\",\n      \"UserId\": \"1\"\n    },\n    {\n      \"Id\": 3,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"Group 3 name\",\n      \"Description\": \"Group 3 description\",\n      \"UserId\": \"1\"\n    }\n]\nA GroupMembership resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /groups/memberships",
+          "description": "",
+          "uriTemplate": "/groups/memberships",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Create a new group membership. The creation results in the creation of a new\nGroupMembership ship resource with the status \"pending\" as well as in an\ninvitation email to the user invited to join the group.\nAn invitation must contain *either* an **InviteeId** *or* an **InviteeEmail**, never both, as the presence of **InviteeEmail** will indicate that the user does not exist on trunktrunk, and should be invited by email.\n\nAny member of a group can invite other users to join it.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"GroupId\": 7,\n  \"InviteeId\": 3\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 4,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"GroupId\": 7,\n  \"Invitee\": 3,\n  \"Status\": \"Pending\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "description": "Accept or reject the group membership. This results in the status of the resource\nchanging from \"pending\" to \"active\" or \"rejected\". \nThe idea is to give users the option to accept an invitation (by this request) or decline it.\nTo identify the membership, either **Id** or **Token** is sufficient.\n\nOnly the user to which to group membership applies can update it.\n\n",
+              "method": "PATCH",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Token\": \"c2246bef37c1373590b58c406634a6cd\"\n  \"Status\": \"Active\"\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 4,\n  \"Token\": \"c2246bef37c1373590b58c406634a6cd\"\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-23T06:06:15Z\", \n  \"GroupId\": 7,\n  \"UserId\": 3,\n  \"Status\": \"Active\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /groups/memberships/{id}",
+          "description": "",
+          "uriTemplate": "/groups/memberships/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the GroupMembership.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Delete a GroupMembership",
+              "description": "Delete the GroupMembership with the given id. This corresponds to leaving a group.\n\nOnly the invited or the inviting user can delete it.\n\n",
+              "method": "DELETE",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "204",
+                      "description": "",
+                      "headers": [],
+                      "body": "# Group ExternalPosts\nExternal posts added by the users of the blogging platform.\n\nAn ExternalPost resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /external/posts",
+          "description": "",
+          "uriTemplate": "/external/posts",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Create a new external post.\n\nAny signed in user can create an external post.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Url\": \"http://www.example.com/\",\n  \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n  \"Title\": \"External Post 1 title\",\n  \"Teaser\": \"External Post 1 teaser\",\n  \"ExternalPublisherId\": \"3\",\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Url\": \"http://www.example.com/\",\n  \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n  \"Title\": \"External Post 1 title\",\n  \"Teaser\": \"External Post 1 teaser\",\n  \"ExternalPublisherId\": \"3\",\n  \"OwnerId\": \"2\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "description": "Update an existing external post.\n\nOnly the owner of the external post is allowed to edit it.\n\n",
+              "method": "PUT",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"Url\": \"http://www.example.com/\",\n  \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n  \"Title\": \"New External Post 1 title\",\n  \"Teaser\": \"New External Post 1 teaser\",\n  \"ExternalPublisherId\": \"2\",\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Url\": \"http://www.example.com/\",\n  \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n  \"Title\": \"New External Post 1 title\",\n  \"Teaser\": \"New External Post 1 teaser\",\n  \"ExternalPublisherId\": \"2\",\n  \"OwnerId\": \"2\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /external/posts/{id}",
+          "description": "",
+          "uriTemplate": "/external/posts/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the ExternalPost.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get the external post with the given id.\n\nAny user can do this request. The caller does not need to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Url\": \"http://www.example.com/\",\n  \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n  \"Title\": \"New External Post 1 title\",\n  \"Teaser\": \"New External Post 1 teaser\",\n  \"ExternalPublisherId\": \"2\",\n  \"OwnerId\": \"2\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Delete",
+              "description": "Delete the external post with the given id.\n\nOnly the owner of the external post is allowed to delete it.\n\n",
+              "method": "DELETE",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "204",
+                      "description": "",
+                      "headers": [],
+                      "body": "",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /external/posts/user/{id}",
+          "description": "",
+          "uriTemplate": "/external/posts/user/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the user.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get all external posts of the user with the given id.\n\nAny user can do this request. The caller does not need to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[\n    {\n      \"Id\": 1,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.example.com/\",\n      \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n      \"Title\": \"New External Post 1 title\",\n      \"Teaser\": \"New External Post 1 teaser\",\n      \"ExternalPublisherId\": \"2\",\n      \"OwnerId\": \"1\"\n    },\n    {\n      \"Id\": 3,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.nytimes.com/article-1\",\n      \"ImageUrl\": \"http://www.shtfpreparedness.com/wp-content/uploads/2013/03/vista-wallpaper-bamboo.jpg\",\n      \"Title\": \"External Post 3 title\",\n      \"Teaser\": \"External Post 3 teaser\",\n      \"ExternalPublisherId\": \"6\",\n      \"OwnerId\": \"1\"\n    }\n]\nAn ExternalPublisher resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /external/publishers",
+          "description": "",
+          "uriTemplate": "/external/publishers",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get a list of all external publishers.\n\nAny user can do this request. The caller does not need to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "[\n    {\n      \"Id\": 1, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.example.org/\", \n      \"ImageUrl\": \"http://oi60.tinypic.com/2s7yhvt.jpg\"\n    },\n    {\n      \"Id\": 2, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.nytimes.com\", \n      \"ImageUrl\": \"http://www.b.dk/sites/www.b.dk/favicon.ico\"\n    }\n]\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Create",
+              "description": "Create a new external publisher.\n\nAny signed in user is allowed to do this request.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"UserId\": 1\n  \"Url\": \"http://www.example.org/\", \n  \"ImageUrl\": \"http://oi60.tinypic.com/2s7yhvt.jpg\"\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Url\": \"http://www.example.org/\", \n  \"ImageUrl\": \"http://oi60.tinypic.com/2s7yhvt.jpg\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /external/publishers/{id}",
+          "description": "",
+          "uriTemplate": "/external/publishers/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of the ExternalPublisher.",
+              "type": "number",
+              "required": true,
+              "default": "",
+              "example": "1",
+              "values": []
+            }
+          ],
+          "actions": [
+            {
+              "name": "Get",
+              "description": "Get the external publisher with the given id.\n\nAny user can do this request. The caller does not need to be signed in.\n\n",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Url\": \"http://www.example.org/\", \n  \"ImageUrl\": \"http://oi60.tinypic.com/2s7yhvt.jpg\"\n}\nAn AbuseReport resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /posts/abuse_reports",
+          "description": "",
+          "uriTemplate": "/posts/abuse_reports",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Create a new abuse report for a post.\n\nAny signed in user is allowed to create an abuse report. A user can only report\nabuse on a post a single time.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"PostId\": 8,\n  \"Message\": \"Abuse report description\"\n}\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"PostId\": 8,\n  \"UserId\": 2,\n  \"Message\": \"Abuse report description\"\n}\nA File resource has the following attributes:\n\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "-> /files",
+          "description": "",
+          "uriTemplate": "/files",
+          "model": {},
+          "parameters": [],
+          "actions": [
+            {
+              "name": "Create",
+              "description": "Upload a file as multipart/form-data and retrieve File resource describing the\nfile. The File resource includes a public URL to the file, which can be used\nin other resources where such an url is needed.\n\n",
+              "method": "POST",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [
+                    {
+                      "name": "",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "multipart/form-data; boundary=---BOUNDARY"
+                        }
+                      ],
+                      "body": "-----BOUNDARY\nContent-Disposition: form-data; name=\"image[file]\"; filename=\"image.jpg\"\nContent-Type: image/jpeg\nContent-Transfer-Encoding: base64\n\n/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a\nHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy\nMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA\nAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB\nAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z\n-----BOUNDARY\n",
+                      "schema": ""
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "name": "201",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"ContentType\": \"image/jpeg\",\n  \"Url\": \"https://ttmediafiles.s3.amazonaws.com/uploads/media/150/article-main-image\"\n}\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

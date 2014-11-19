@@ -1,0 +1,1311 @@
+FORMAT: 1A
+
+# TrunkTrunk
+The TrunkTrunk API provides the backend of the TrunkTrunk blogging platform.
+# Group Posts
+Posts (articles).
+
+A Post resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier
+- **UserId**: (int, required) Id of the user who owns/created the posts.
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **UpdatedAt**: (datetime, required) The latest time of modification of the resource
+- **Title**: (string, required) The post title
+- **Content**: (string, required) The post content (the text of the article)
+- **Tags**: (list of strings, required) List of unique post tags (strings) describing the post
+- **ImageUrl**: (string, option) Url of the post image
+- **ImageCaption**: (string, optional) The caption of the post image
+- **Price**: (decimal, required) The price of the post. If set to 0.0, the post is free.
+- **NewsquidProductId**: (int, optional) The integer of the product in NEWSQUID corresponding to the post, if such a product exists.
+- **DraftRevisionId**: (int, required) The revision number of the newest post revision.
+- **PublishedRevisionId**: (int, optional) The revision number of the post revision currently published. I 0, the post is not published.
+- **GroupId**: (int, optional) The id of the group to which the post belong. If set to 0, the post is considered part of no group.
+
+The attributes *Id*, *Revision*, *CreatedAt*, *UpdatedAt*, *OwnerId*, *DraftRevisionId*, and *PublishedRevisionId* are set by the TrunkTrunk API.
+
+
+## -> /posts [/posts]
+
+### Create [POST]
+Create a new post. The post is not published per default.
+
+Any signed in user can create a post.
+
++ Request (application/json)
+
+        {
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "GroupId": 0
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 1, 
+          "PublishedRevisionId": 0,
+          "GroupId": 0
+        }
+
+### Update [PUT]
+Update a post. The changes are saved as a draft and are not published. If a
+previous version of the post is published, this remains the case (the published
+version of post is not altered).
+
+Only the creator of the post or any user in the group to which the post belongs can update a post.
+
++ Request (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 1, 
+          "PublishedRevisionId": 1,
+          "GroupId": 0
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 2, 
+          "PublishedRevisionId": 1,
+          "GroupId": 0
+        }
+
+
+## -> /posts/publish [/posts/publish]
+
+### Update [PUT]
+Update a post. the changes are published. If a previous version of the post is
+already published, the previous version is replaced with the new version.
+
+Only the creator of the post or any user in the group to which the post belongs can update a post.
+
++ Request (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 1, 
+          "PublishedRevisionId": 1,
+          "GroupId": 0
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 2, 
+          "PublishedRevisionId": 2,
+          "GroupId": 0
+        }
+
+
+## -> /posts/{id} [/posts/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the Post.
+
+### Get [GET]
+Get the latest published version of the post with the given id.
+
+Anyone can get a post by its id. It does not require that the caller is signed in.
+
++ Response 200 (application/json)
+
+        {
+          "Id": 1, 
+          "UserId": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1<br /><br />And a guy!<img src='https://ttmediafiles.s3.amazonaws.com/uploads/inline_media/9/Sk__rmbillede_2014-02-14_kl._12.08.59.png'>",
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "https://ttmediafiles.s3.amazonaws.com/uploads/media/150/article-main-image",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 1, 
+          "PublishedRevisionId": 1,
+          "GroupId": 1
+        }
+
+### Delete [DELETE]
+Delete the post with the given id.
+
+Only the creator of the post or any user in the group to which the post belongs can delete a post.
+
++ Response 204
+
+
+## -> /posts/{id}/draft [/posts/{id}/draft]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the Post.
+
+### Get [GET]
+Get the latest draft of the post with the given id.
+
+Only the creator of the post or any user in the group to which the post belongs can get the latest draft of a post.
+
++ Response 200 (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 5, 
+          "PublishedRevisionId": 2,
+          "GroupId": 0
+        }
+
+
+##  -> /posts/user/{id} [/posts/user/{id}{?items_per_page,page}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the user.
+    + items_per_page (optional, number, `1`) ... How many posts to return per request.
+    + page (optional, number, `1`) ... How many *items_per_page* to skip.
+
+### Get [GET]
+Get all published posts of the user with the given id.
+
+Anyone get do this request. It does not require that the caller is signed in.
+
++ Response 200 (application/json)
+
+        [{
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 3, 
+          "PublishedRevisionId": 3,
+          "GroupId": 2
+        }, {
+          "Id": 2, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 2", 
+          "Content": "Content of Post 2", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "https://ag.arizona.edu/yavapai/graphics/bamboo.jpg",
+          "ImageCaption": "Image caption of Post 2",
+          "Price": 1.1,
+          "NewsquidProductId": 7,
+          "DraftRevisionId": 2, 
+          "PublishedRevisionId": 2,
+          "GroupId": 7
+        }]
+
+
+## -> /posts/group/{id} [/posts/group/{id}{?items_per_page,page}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the group.
+    + items_per_page (optional, number, `1`) ... How many posts to return per request.
+    + page (optional, number, `1`) ... How many *items_per_page* to skip.
+
+### Get [GET]
+Get all published posts of the group with the given id.
+
+Anyone get do this request. It does not require that the caller is signed in.
+
++ Response 200 (application/json)
+
+        [{
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 3, 
+          "PublishedRevisionId": 3,
+          "GroupId": 0
+        }, {
+          "Id": 2, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 2", 
+          "Content": "Content of Post 2", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "https://ag.arizona.edu/yavapai/graphics/bamboo.jpg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 2.2,
+          "NewsquidProductId": 7,
+          "DraftRevisionId": 2, 
+          "PublishedRevisionId": 2,
+          "GroupId": 4
+        }]
+
+
+
+## -> /posts/featured [/posts/featured]
+
+### Get [GET]
+Get all featured posts (the posts that appear on the front page of TrunkTrunk).
+
+Anyone get do this request. It does not require that the caller is signed in.
+
++ Response 200 (application/json)
+
+        [{
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 3, 
+          "PublishedRevisionId": 3,
+          "GroupId": 0
+        }, {
+          "Id": 2, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 2", 
+          "Content": "Content of Post 2", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "https://ag.arizona.edu/yavapai/graphics/bamboo.jpg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 3.1,
+          "NewsquidProductId": 7,
+          "DraftRevisionId": 2, 
+          "PublishedRevisionId": 2,
+          "GroupId": 0
+        }]
+
+
+## -> /posts{?search} [/posts{?search,items_per_page,page}]
+
++ Parameters
+    + search (required, string) ... Search string. The terms with which to search.
+    + items_per_page (optional, number, `1`) ... How many posts to return per request.
+    + page (optional, number, `1`) ... How many *items_per_page* to skip.
+
+### Search for posts [GET]
+Retrieve all published posts matching the given search parameter (fuzzy
+search).
+
++ Response 200 (application/json)
+
+        [{
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 1", 
+          "Content": "Content of Post 1", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "ImageCaption": "Image caption of Post 1",
+          "Price": 0,
+          "NewsquidProductId": 0,
+          "DraftRevisionId": 3, 
+          "PublishedRevisionId": 3,
+          "GroupId": 3
+        }, {
+          "Id": 2, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Title": "Post 2", 
+          "Content": "Content of Post 2", 
+          "Tags": [
+            "Tag 1", "Tag 2", "Tag 3"
+          ],
+          "ImageUrl": "https://ag.arizona.edu/yavapai/graphics/bamboo.jpg",
+          "ImageCaption": "Image caption of Post 2",
+          "Price": 0.1,
+          "NewsquidProductId": 7,
+          "DraftRevisionId": 2, 
+          "PublishedRevisionId": 2,
+          "GroupId": 0
+        }]
+# Group PostComments
+Handles post comments (users commenting on posts).
+
+A PostComment resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier for the resource 
+- **CreatedAt**: (datetime, required) The time of creation of the resource 
+- **UpdatedAt**: (datetime, required) The time of last update of the resource 
+- **UserId**: (int, required) The id of the user who created the comment
+- **PostId**: (int, required) The id of the comment to which the comment applies 
+- **Content**: (string, required) The comment text 
+
+The attributes *Id*, *CreatedAt*, *UpdatedAt*, and *UserId* are set by the TrunkTrunk API.
+
+
+## -> /posts/comments [/posts/comments]
+
+### Create [POST]
+Create a new comment.
+
+Any signed in user is allowed to create a comment.
+
++ Request (application/json)
+            
+        {
+          "PostId": 1,
+          "Content": "Comment on Post 1"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1
+          "CreatedAt": "2014-04-14T02:15:15Z",
+          "UpdatedAt": "2014-04-18T02:15:15Z",
+          "UserId": 2,
+          "PostId": 1,
+          "Content": "Comment on Post 1"
+        }
+
+### Update [PUT]
+Update an existing comment.
+
+Only the creator of a comment can edit it.
+
++ Request (application/json)
+            
+        {
+          "PostId": 1,
+          "Content": "Comment on Post 1"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1
+          "CreatedAt": "2014-04-14T02:15:15Z",
+          "UpdatedAt": "2014-04-18T02:15:15Z",
+          "UserId": 2,
+          "PostId": 1,
+          "Content": "Comment on Post 1"
+        }
+
+
+
+## -> /posts/comments/{id} [/posts/comments/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the comment.
+
+### Delete [DELETE]
+Deletes the comment with the given id.
+
+Only the creator of a comment can delete it.
+
++ Response 204
+
+
+## -> /posts/comments/post/{id} [/posts/comments/post/{id}{?items_per_page,page}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the post.
+    + items_per_page (optional, number, `1`) ... How many comments to return per request.
+    + page (optional, number, `1`) ... How many *items_per_page* to skip.
+
+### Get [GET]
+Gets all comments to the post with the given id
+
++ Response 200
+
+        [
+            {
+              "Id": 1
+              "CreatedAt": "2014-04-14T02:15:15Z",
+              "UpdatedAt": "2014-04-18T02:15:15Z",
+              "UserId": 2,
+              "PostId": 1,
+              "Content": "Comment on Post 1"
+            },
+            {
+              "Id": 7
+              "CreatedAt": "2014-04-16T02:15:15Z",
+              "UpdatedAt": "2014-04-16T02:15:15Z",
+              "UserId": 7,
+              "PostId": 1,
+              "Content": "Another comment on Post 1"
+            }
+        ]
+# Group Users
+Users of the blogging platform.
+
+A User resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier of the resource
+- **NewsquidUserId**: (int, required) The unique identifier of the user resource in NEWSQUID corresponding to the user resource
+- **CreatedAt**: (datetime, required) The time of creation of the resource 
+- **UpdatedAt**: (datetime, required) The time of last update of the resource 
+- **Name**: (string, required) The name of the user 
+- **Email**: (string, required) The email of the user 
+- **Title**: (string, optional) The title of the user (such as 'Freelance writer' or 'Spare time publisher') 
+- **Description**: (string, optional) A description of the user 
+- **ImageUrl**: (string, optional) Url for the profile picture of the user
+- **FacebookLink**: (string, optional) A link to the Facebook page of the user 
+- **TwitterLink**: (string, optional) A link to the Twitter page of the user
+- **GooglePlusLink**:(string, optional) A link to the Google+ page of the user
+- **LinkedInLink**: (string, optional) A link to the LinkedIn page of the user
+- **WebsiteLink**: (string, optional) A link to the personal website/blog of the user
+
+The attributes *Id*, *NewsquidUserId*, *CreatedAt*, and *UpdatedAt* are set by the TrunkTrunk API.
+
+## -> /users{?search} [/users{?search}]
+
++ Parameters
+    + search (required, string, `lars`) ... Search term to matched against email and/or name of users.
+
+### Search [GET]
+Get a list of users, based on a search on their name and email
+
+Anyone can do this request. The caller does not need to be signed in.
+
++ Response 200 (application/json)
+
+        [
+          {
+            "Id": 1, 
+            "NewsquidUserId": 7, 
+            "CreatedAt": "2014-04-14T02:15:15Z", 
+            "UpdatedAt": "2014-04-14T02:15:15Z", 
+            "Name": "Lars",
+            "Email": "user1@example.org",
+            "Title": "Freelance writer", 
+            "Description": "Description of User 1",
+            "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+            "FacebookLink": "",
+            "TwitterLink": "",
+            "GooglePlusLink": "",
+            "LinkedInLink": "",
+            "WebsiteLink": ""
+          },
+            "Id": 1, 
+            "NewsquidUserId": 8, 
+            "CreatedAt": "2014-04-14T02:15:15Z", 
+            "UpdatedAt": "2014-04-14T02:15:15Z", 
+            "Name": "User 2",
+            "Email": "LarsMan@example.org",
+            "Title": "Freelance writer", 
+            "Description": "Description of User 2",
+            "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+            "FacebookLink": "",
+            "TwitterLink": "",
+            "GooglePlusLink": "",
+            "LinkedInLink": "",
+            "WebsiteLink": ""
+          }
+        ]
+
+
+## -> /users/current [/users/current]
+
+### Get [GET]
+Get the user currently logged in.
+
+Any signed in user can do this request.
+
++ Response 200 (application/json)
+
+        {
+          "Id": 1, 
+          "NewsquidUserId": 7, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Name": "User 1",
+          "Email": "user1@example.org",
+          "Title": "Freelance writer",
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "Description": "Description of User 1",
+          "FacebookLink": "",
+          "TwitterLink": "",
+          "GooglePlusLink": "",
+          "LinkedInLink": "",
+          "WebsiteLink": ""
+        }
+
+
+### Update [PUT]
+Update the user information of the current user.
+
+Any signed in user can do this request.
+
++ Request (application/json)
+
+        {
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Name": "Updated User 1",
+          "Email": "user1@example.org",
+          "Title": "Freelance writer", 
+          "Description": "New description of User 1",
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "FacebookLink": "",
+          "TwitterLink": "",
+          "GooglePlusLink": "",
+          "LinkedInLink": "",
+          "WebsiteLink": "http://www.trunktrunk.com/user1"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1, 
+          "NewsquidUserId": 7, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Name": "Updated User 1",
+          "Email": "user1@example.org",
+          "Title": "Freelance writer", 
+          "Description": "New description of User 1",
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "FacebookLink": "",
+          "TwitterLink": "",
+          "GooglePlusLink": "",
+          "LinkedInLink": "",
+          "WebsiteLink": "http://www.trunktrunk.com/user1"
+        }
+
+
+## -> /users/{id} [/users/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the user.
+
+### Get [GET]
+Get the user with the given id.
+
+Anyone can do this request. The caller does not need to be signed in.
+
++ Response 200 (application/json)
+
+        {
+          "Id": 1, 
+          "NewsquidUserId": 7, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Name": "User 1",
+          "Email": "user1@example.org",
+          "Title": "Freelance writer", 
+          "Description": "Description of User 1",
+          "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+          "FacebookLink": "",
+          "TwitterLink": "",
+          "GooglePlusLink": "",
+          "LinkedInLink": "",
+          "WebsiteLink": ""
+        }
+
+
+## -> /users/group/{id} [/users/group/{id}{?items_per_page,page}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the group.
+    + items_per_page (optional, number, `1`) ... How many users to return per request.
+    + page (optional, number, `1`) ... How many *items_per_page* to skip.
+
+### Get [GET]
+Get all users of the group with the given id.
+
+Anyone can do this request. The caller does not need to be signed in.
+
++ Response 200 (application/json)
+
+        [
+            {
+              "Id": 1, 
+              "NewsquidUserId": 7, 
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Name": "User 1",
+              "Email": "user1@example.org",
+              "Title": "Freelance writer", 
+              "Description": "Description of User 1",
+              "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+              "FacebookLink": "",
+              "TwitterLink": "",
+              "GooglePlusLink": "",
+              "LinkedInLink": "",
+              "WebsiteLink": ""
+            },
+            {
+              "Id": 3, 
+              "NewsquidUserId": 23, 
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Name": "User 3",
+              "Email": "user3@example.org",
+              "Title": "Freelance publisher", 
+              "Description": "Description of User 3",
+              "ImageUrl": "http://www-static.weddingbee.com/pics/36694/head.jpeg",
+              "FacebookLink": "http://facebook.com/user3",
+              "TwitterLink": "http://twitter.com/user3",
+              "GooglePlusLink": "",
+              "LinkedInLink": "",
+              "WebsiteLink": ""
+            }
+        ]
+# Group UserSessions
+Handles user sessions (sign in/out).
+
+A Session resource has the following attributes:
+
+- **UserId**: (int, required) Unique identifier of the user of which the session is concerned 
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **UpdatedAt**: (datetime, required) The latest time of modification of the resource
+- **ExpiresAt**: (datetime, required) The time of expiration of the session. After this time, the user will have to reauthenticate. 
+- **Token**: (string, required) The token used for authenticating the user 
+
+All attributes are set by the TrunkTrunk API.
+
+
+## -> /users/sessions [/users/sessions]
+
+### Create [POST]
+Create a new user session. No request payload is expected. Instead, a valid
+NEWSQUID token is expected to be sent in the *Authorization* HTTP header.
+
++ Request (application/json)
+    + Headers
+            
+            Authorization: QWxhZGRpbjpvcGVuIHNlc2FtZQ
+
++ Response 201 (application/json)
+
+        {
+          "UserId": 2,
+          "CreatedAt": "2014-04-14T02:15:15Z",
+          "UpdatedAt": "2014-04-18T02:15:15Z",
+          "ExpiresAt": "2014-04-18T03:15:15Z",
+          "Token": "QWxhZGRpbjpvcGVuIHNlc2FtZQ",
+        }
+
+
+### Delete [DELETE]
+Destroys (expires) the session of the user currently logged in
+
++ Response 204
+# Group Groups
+Groups of collaborating users of the blogging platform.
+
+A Group resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **UpdatedAt**: (datetime, required) The latest time of modification of the resource
+- **Name**: (string, required) The name of the group 
+- **Description**: (string, optional) A description of the group 
+- **UserId**: (int, required) Identifier of the user who created the group and therefore owns it 
+
+The attributes *Id*, *CreatedAt*, *UpdatedAt*, and *UserId* are set by the TrunkTrunk API.
+
+
+## -> /groups [/groups]
+
+### Create [POST]
+Create a new group.
+
+Any signed in user can create a group.
+
++ Request (application/json)
+
+        {
+          "Name": "Group 1 name",
+          "Description": "Group 1 description"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Name": "Group 1 name",
+          "Description": "Group 1 description",
+          "UserId": "2"
+        }
+
+### Update [PUT]
+Update a group.
+
+Any member of the group can update it.
+
++ Request (application/json)
+
+        {
+          "Id": 1,
+          "Name": "New Group 1 name",
+          "Description": "New Group 1 description",
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Name": "New Group 1 name",
+          "Description": "New Group 1 description",
+          "UserId": "2"
+        }
+
+
+## -> /groups/{id} [/groups/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the group.
+
+### Get [GET]
+Get the group with the given id.
+
+Any user can do this request. The caller does not have to be signed in.
+
++ Response 200 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Name": "Group 1 name",
+          "Description": "Group 1 description",
+          "UserId": "2"
+        }
+
+
+## -> /groups/user/{id} [/groups/user/{id}{?items_per_page,page}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the user.
+    + items_per_page (optional, number, `1`) ... How many groups to return per request.
+    + page (optional, number, `1`) ... How many *items_per_page* to skip.
+
+### Get [GET]
+Get a list of the groups where the user with the given id is member.
+
+Any user can do this request. The caller does not have to be signed in.
+
++ Response 200 (application/json)
+
+        [
+            {
+              "Id": 1,
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Name": "Group 1 name",
+              "Description": "Group 1 description",
+              "UserId": "1"
+            },
+            {
+              "Id": 3,
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Name": "Group 3 name",
+              "Description": "Group 3 description",
+              "UserId": "1"
+            }
+        ]
+# Group GroupMemberships 
+The connection between groups and users and vice versa.
+
+A GroupMembership resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier
+- **Token**: (string, required) A unique token granting permission to accept and reject group invites
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **UpdatedAt**: (datetime, required) The latest time of modification of the resource
+- **GroupId**: (int, required) Identifier of the group to which the membership applies
+- **InviterId**: (int, required) Identifier of the user who made the invitation
+- **InviteeId**: (int) Identifier of the user to which the membership applies
+- **InviteeEmail**: (string) Email address to send invitation to
+- **Status**: (string, required) The status of the membership. When a 
+membership is first created, the status is "pending". When a membership is
+accepted, the status changes to "active". Alternatively, an invitation can be rejected by setting the status to "rejected".
+
+The attributes *Id*, *CreatedAt*, *UpdatedAt*, *Token*, *InviterId*, and *Status* are set by the TrunkTrunk API.
+
+
+## -> /groups/memberships [/groups/memberships]
+
+### Create [POST]
+Create a new group membership. The creation results in the creation of a new
+GroupMembership ship resource with the status "pending" as well as in an
+invitation email to the user invited to join the group.
+An invitation must contain *either* an **InviteeId** *or* an **InviteeEmail**, never both, as the presence of **InviteeEmail** will indicate that the user does not exist on trunktrunk, and should be invited by email.
+
+Any member of a group can invite other users to join it.
+
++ Request (application/json)
+
+        {
+          "GroupId": 7,
+          "InviteeId": 3
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 4,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "GroupId": 7,
+          "Invitee": 3,
+          "Status": "Pending"
+        }
+
+### Update [PATCH]
+Accept or reject the group membership. This results in the status of the resource
+changing from "pending" to "active" or "rejected". 
+The idea is to give users the option to accept an invitation (by this request) or decline it.
+To identify the membership, either **Id** or **Token** is sufficient.
+
+Only the user to which to group membership applies can update it.
+
++ Request (application/json)
+
+        {
+          "Token": "c2246bef37c1373590b58c406634a6cd"
+          "Status": "Active"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 4,
+          "Token": "c2246bef37c1373590b58c406634a6cd"
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-23T06:06:15Z", 
+          "GroupId": 7,
+          "UserId": 3,
+          "Status": "Active"
+        }
+
+
+## -> /groups/memberships/{id} [/groups/memberships/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the GroupMembership.
+
+### Delete a GroupMembership [DELETE]
+Delete the GroupMembership with the given id. This corresponds to leaving a group.
+
+Only the invited or the inviting user can delete it.
+
++ Response 204
+# Group ExternalPosts
+External posts added by the users of the blogging platform.
+
+An ExternalPost resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **UpdatedAt**: (datetime, required) The latest time of modification of the resource
+- **Url**: (string, required) URL of the external post (article) 
+- **ImageUrl**: (string, optional) URL of the image of the external post if one exists
+- **Title**: (string, required) The title of the external post 
+- **Teaser**: (string, optional) A teaser text displayed with the external post 
+- **ExternalPublisherId**: (int, optional) The id of the external publisher
+where the external post is published. If no external publisher exists fo the
+post, set this to 0.
+- **OwnerId**: (int, required) The is of the user who created and therefore owns the external post
+
+The attributes *Id*, *CreatedAt*, *UpdatedAt*, and *OwnerId* are set by the TrunkTrunk API.
+
+
+## -> /external/posts [/external/posts]
+
+### Create [POST]
+Create a new external post.
+
+Any signed in user can create an external post.
+
++ Request (application/json)
+
+        {
+          "Url": "http://www.example.com/",
+          "ImageUrl": "http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg",
+          "Title": "External Post 1 title",
+          "Teaser": "External Post 1 teaser",
+          "ExternalPublisherId": "3",
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Url": "http://www.example.com/",
+          "ImageUrl": "http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg",
+          "Title": "External Post 1 title",
+          "Teaser": "External Post 1 teaser",
+          "ExternalPublisherId": "3",
+          "OwnerId": "2"
+        }
+
+### Update [PUT]
+Update an existing external post.
+
+Only the owner of the external post is allowed to edit it.
+
++ Request (application/json)
+
+        {
+          "Id": 1,
+          "Url": "http://www.example.com/",
+          "ImageUrl": "http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg",
+          "Title": "New External Post 1 title",
+          "Teaser": "New External Post 1 teaser",
+          "ExternalPublisherId": "2",
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Url": "http://www.example.com/",
+          "ImageUrl": "http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg",
+          "Title": "New External Post 1 title",
+          "Teaser": "New External Post 1 teaser",
+          "ExternalPublisherId": "2",
+          "OwnerId": "2"
+        }
+
+
+## -> /external/posts/{id} [/external/posts/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the ExternalPost.
+
+### Get [GET]
+Get the external post with the given id.
+
+Any user can do this request. The caller does not need to be signed in.
+
++ Response 200 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Url": "http://www.example.com/",
+          "ImageUrl": "http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg",
+          "Title": "New External Post 1 title",
+          "Teaser": "New External Post 1 teaser",
+          "ExternalPublisherId": "2",
+          "OwnerId": "2"
+        }
+
+### Delete [DELETE]
+Delete the external post with the given id.
+
+Only the owner of the external post is allowed to delete it.
+
++ Response 204
+
+
+## -> /external/posts/user/{id} [/external/posts/user/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the user.
+
+### Get [GET]
+Get all external posts of the user with the given id.
+
+Any user can do this request. The caller does not need to be signed in.
+
++ Response 200 (application/json)
+
+        [
+            {
+              "Id": 1,
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Url": "http://www.example.com/",
+              "ImageUrl": "http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg",
+              "Title": "New External Post 1 title",
+              "Teaser": "New External Post 1 teaser",
+              "ExternalPublisherId": "2",
+              "OwnerId": "1"
+            },
+            {
+              "Id": 3,
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Url": "http://www.nytimes.com/article-1",
+              "ImageUrl": "http://www.shtfpreparedness.com/wp-content/uploads/2013/03/vista-wallpaper-bamboo.jpg",
+              "Title": "External Post 3 title",
+              "Teaser": "External Post 3 teaser",
+              "ExternalPublisherId": "6",
+              "OwnerId": "1"
+            }
+        ]
+# Group ExternalPublishers
+External publishers referenced by the users of the blogging platform. This can
+be publishers such as New York times or The Wall Street Journal.
+
+An ExternalPublisher resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier
+- **UserId**: (int, required) The id of the user who registered the publisher
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **UpdatedAt**: (datetime, required) The latest time of modification of the resource
+- **Url**: (string, required) URL to the website of the external publisher
+- **ImageUrl**: (string, optional) URL to the logo of the external publisher
+
+The attributes *Id*, *CreatedAt*, and *UpdatedAt* are set by the TrunkTrunk API.
+
+
+## -> /external/publishers [/external/publishers]
+
+### Get [GET]
+Get a list of all external publishers.
+
+Any user can do this request. The caller does not need to be signed in.
+
++ Response 200 (application/json)
+        
+        [
+            {
+              "Id": 1, 
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Url": "http://www.example.org/", 
+              "ImageUrl": "http://oi60.tinypic.com/2s7yhvt.jpg"
+            },
+            {
+              "Id": 2, 
+              "CreatedAt": "2014-04-14T02:15:15Z", 
+              "UpdatedAt": "2014-04-14T02:15:15Z", 
+              "Url": "http://www.nytimes.com", 
+              "ImageUrl": "http://www.b.dk/sites/www.b.dk/favicon.ico"
+            }
+        ]
+
+### Create [POST]
+Create a new external publisher.
+
+Any signed in user is allowed to do this request.
+
++ Request (application/json)
+
+        {
+          "UserId": 1
+          "Url": "http://www.example.org/", 
+          "ImageUrl": "http://oi60.tinypic.com/2s7yhvt.jpg"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Url": "http://www.example.org/", 
+          "ImageUrl": "http://oi60.tinypic.com/2s7yhvt.jpg"
+        }
+
+
+## -> /external/publishers/{id} [/external/publishers/{id}]
+
++ Parameters
+    + id (required, number, `1`) ... Id of the ExternalPublisher.
+
+### Get [GET]
+Get the external publisher with the given id.
+
+Any user can do this request. The caller does not need to be signed in.
+
++ Response 200 (application/json)
+
+        {
+          "Id": 1, 
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "UpdatedAt": "2014-04-14T02:15:15Z", 
+          "Url": "http://www.example.org/", 
+          "ImageUrl": "http://oi60.tinypic.com/2s7yhvt.jpg"
+        }
+# Group PostAbuseReports
+Abuse reports targeted posts (articles). If a user believes a post contains
+inappropriate content, the user can report abuse.
+
+An AbuseReport resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **PostId**: (int, required) The identifier of the post to which the abuse report applies 
+- **UserId**: (int, required) The identifier of the user who reported the abuse 
+- **Message**: (string, required) A message explaining how the user believes the post contains inappropriate content
+
+The attributes *Id*, *CreatedAt*, and *UserId* are set by the TrunkTrunk API.
+
+
+## -> /posts/abuse_reports [/posts/abuse_reports]
+
+### Create [POST]
+Create a new abuse report for a post.
+
+Any signed in user is allowed to create an abuse report. A user can only report
+abuse on a post a single time.
+
++ Request (application/json)
+
+        {
+          "PostId": 8,
+          "Message": "Abuse report description"
+        }
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "PostId": 8,
+          "UserId": 2,
+          "Message": "Abuse report description"
+        }
+# Group Files
+File uploads. Provides a way of getting public accessible URLs to files.
+
+A File resource has the following attributes:
+
+- **Id**: (int, required) Unique identifier
+- **CreatedAt**: (datetime, required) The time of creation of the resource
+- **ContentType**: (string, required) The content type of the file 
+- **Url**: (string, required) The public URL of the file 
+
+All attributes are set by the TrunkTrunk API.
+
+
+## -> /files [/files]
+
+### Create [POST]
+Upload a file as multipart/form-data and retrieve File resource describing the
+file. The File resource includes a public URL to the file, which can be used
+in other resources where such an url is needed.
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+
+        -----BOUNDARY
+        Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+        Content-Type: image/jpeg
+        Content-Transfer-Encoding: base64
+
+        /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+        HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+        AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+        AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+        -----BOUNDARY
+
++ Response 201 (application/json)
+
+        {
+          "Id": 1,
+          "CreatedAt": "2014-04-14T02:15:15Z", 
+          "ContentType": "image/jpeg",
+          "Url": "https://ttmediafiles.s3.amazonaws.com/uploads/media/150/article-main-image"
+        }
