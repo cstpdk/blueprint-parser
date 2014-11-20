@@ -9,7 +9,7 @@ case "$1" in
 	"--bash") DOCKER_OPTS="$DOCKER_OPTS --entrypoint bash" ; shift ;
 		TO_RUN="-c \"$@\"";;
 	"--build") DOCKER_OPTS="$DOCKER_OPTS --entrypoint bash" ; shift ;
-		TO_RUN='-c "go build && go install && blueprint-parser '"$@"'"' ;;
+		TO_RUN='-c "go install && blueprint-parser '"$@"'"' ;;
 esac
 
 eval docker run $DOCKER_OPTS blueprint-parser "$TO_RUN"

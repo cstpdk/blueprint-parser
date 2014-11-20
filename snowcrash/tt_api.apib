@@ -2,7 +2,9 @@ FORMAT: 1A
 
 # TrunkTrunk
 The TrunkTrunk API provides the backend of the TrunkTrunk blogging platform.
+
 # Group Posts
+
 Posts (articles).
 
 A Post resource has the following attributes:
@@ -423,7 +425,9 @@ search).
           "PublishedRevisionId": 2,
           "GroupId": 0
         }]
+
 # Group PostComments
+
 Handles post comments (users commenting on posts).
 
 A PostComment resource has the following attributes:
@@ -531,6 +535,7 @@ Gets all comments to the post with the given id
               "Content": "Another comment on Post 1"
             }
         ]
+
 # Group Users
 Users of the blogging platform.
 
@@ -747,6 +752,7 @@ Anyone can do this request. The caller does not need to be signed in.
               "WebsiteLink": ""
             }
         ]
+
 # Group UserSessions
 Handles user sessions (sign in/out).
 
@@ -787,6 +793,7 @@ NEWSQUID token is expected to be sent in the *Authorization* HTTP header.
 Destroys (expires) the session of the user currently logged in
 
 + Response 204
+
 # Group Groups
 Groups of collaborating users of the blogging platform.
 
@@ -906,6 +913,7 @@ Any user can do this request. The caller does not have to be signed in.
               "UserId": "1"
             }
         ]
+
 # Group GroupMemberships 
 The connection between groups and users and vice versa.
 
@@ -993,6 +1001,7 @@ Delete the GroupMembership with the given id. This corresponds to leaving a grou
 Only the invited or the inviting user can delete it.
 
 + Response 204
+
 # Group ExternalPosts
 External posts added by the users of the blogging platform.
 
@@ -1143,6 +1152,7 @@ Any user can do this request. The caller does not need to be signed in.
               "OwnerId": "1"
             }
         ]
+
 # Group ExternalPublishers
 External publishers referenced by the users of the blogging platform. This can
 be publishers such as New York times or The Wall Street Journal.
@@ -1228,6 +1238,7 @@ Any user can do this request. The caller does not need to be signed in.
           "Url": "http://www.example.org/", 
           "ImageUrl": "http://oi60.tinypic.com/2s7yhvt.jpg"
         }
+
 # Group PostAbuseReports
 Abuse reports targeted posts (articles). If a user believes a post contains
 inappropriate content, the user can report abuse.
@@ -1267,6 +1278,7 @@ abuse on a post a single time.
           "UserId": 2,
           "Message": "Abuse report description"
         }
+
 # Group Files
 File uploads. Provides a way of getting public accessible URLs to files.
 

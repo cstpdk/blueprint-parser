@@ -7,7 +7,7 @@
     }
   ],
   "name": "TrunkTrunk",
-  "description": "The TrunkTrunk API provides the backend of the TrunkTrunk blogging platform.\n",
+  "description": "The TrunkTrunk API provides the backend of the TrunkTrunk blogging platform.\n\n",
   "resourceGroups": [
     {
       "name": "Posts",
@@ -484,7 +484,7 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "[{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 3, \n  \"PublishedRevisionId\": 3,\n  \"GroupId\": 3\n}, {\n  \"Id\": 2, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 2\", \n  \"Content\": \"Content of Post 2\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"https://ag.arizona.edu/yavapai/graphics/bamboo.jpg\",\n  \"ImageCaption\": \"Image caption of Post 2\",\n  \"Price\": 0.1,\n  \"NewsquidProductId\": 7,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 0\n}]\nA PostComment resource has the following attributes:\n\n",
+                      "body": "[{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 1\", \n  \"Content\": \"Content of Post 1\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n  \"ImageCaption\": \"Image caption of Post 1\",\n  \"Price\": 0,\n  \"NewsquidProductId\": 0,\n  \"DraftRevisionId\": 3, \n  \"PublishedRevisionId\": 3,\n  \"GroupId\": 3\n}, {\n  \"Id\": 2, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Title\": \"Post 2\", \n  \"Content\": \"Content of Post 2\", \n  \"Tags\": [\n    \"Tag 1\", \"Tag 2\", \"Tag 3\"\n  ],\n  \"ImageUrl\": \"https://ag.arizona.edu/yavapai/graphics/bamboo.jpg\",\n  \"ImageCaption\": \"Image caption of Post 2\",\n  \"Price\": 0.1,\n  \"NewsquidProductId\": 7,\n  \"DraftRevisionId\": 2, \n  \"PublishedRevisionId\": 2,\n  \"GroupId\": 0\n}]\n",
                       "schema": ""
                     }
                   ]
@@ -492,7 +492,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "PostComments",
+      "description": "Handles post comments (users commenting on posts).\n\nA PostComment resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier for the resource \n\n- **CreatedAt**: (datetime, required) The time of creation of the resource \n\n- **UpdatedAt**: (datetime, required) The time of last update of the resource \n\n- **UserId**: (int, required) The id of the user who created the comment\n\n- **PostId**: (int, required) The id of the comment to which the comment applies \n\n- **Content**: (string, required) The comment text \n\nThe attributes *Id*, *CreatedAt*, *UpdatedAt*, and *UserId* are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /posts/comments",
           "description": "",
@@ -673,7 +679,7 @@
                       "name": "200",
                       "description": "",
                       "headers": [],
-                      "body": "[\n    {\n      \"Id\": 1\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\",\n      \"UpdatedAt\": \"2014-04-18T02:15:15Z\",\n      \"UserId\": 2,\n      \"PostId\": 1,\n      \"Content\": \"Comment on Post 1\"\n    },\n    {\n      \"Id\": 7\n      \"CreatedAt\": \"2014-04-16T02:15:15Z\",\n      \"UpdatedAt\": \"2014-04-16T02:15:15Z\",\n      \"UserId\": 7,\n      \"PostId\": 1,\n      \"Content\": \"Another comment on Post 1\"\n    }\n]\nA User resource has the following attributes:\n\n",
+                      "body": "[\n    {\n      \"Id\": 1\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\",\n      \"UpdatedAt\": \"2014-04-18T02:15:15Z\",\n      \"UserId\": 2,\n      \"PostId\": 1,\n      \"Content\": \"Comment on Post 1\"\n    },\n    {\n      \"Id\": 7\n      \"CreatedAt\": \"2014-04-16T02:15:15Z\",\n      \"UpdatedAt\": \"2014-04-16T02:15:15Z\",\n      \"UserId\": 7,\n      \"PostId\": 1,\n      \"Content\": \"Another comment on Post 1\"\n    }\n]\n",
                       "schema": ""
                     }
                   ]
@@ -681,7 +687,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "Users of the blogging platform.\n\nA User resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier of the resource\n\n- **NewsquidUserId**: (int, required) The unique identifier of the user resource in NEWSQUID corresponding to the user resource\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource \n\n- **UpdatedAt**: (datetime, required) The time of last update of the resource \n\n- **Name**: (string, required) The name of the user \n\n- **Email**: (string, required) The email of the user \n\n- **Title**: (string, optional) The title of the user (such as 'Freelance writer' or 'Spare time publisher') \n\n- **Description**: (string, optional) A description of the user \n\n- **ImageUrl**: (string, optional) Url for the profile picture of the user\n\n- **FacebookLink**: (string, optional) A link to the Facebook page of the user \n\n- **TwitterLink**: (string, optional) A link to the Twitter page of the user\n\n- **GooglePlusLink**:(string, optional) A link to the Google+ page of the user\n\n- **LinkedInLink**: (string, optional) A link to the LinkedIn page of the user\n\n- **WebsiteLink**: (string, optional) A link to the personal website/blog of the user\n\nThe attributes *Id*, *NewsquidUserId*, *CreatedAt*, and *UpdatedAt* are set by the TrunkTrunk API.\n\n",
+      "resources": [
         {
           "name": "-> /users{?search}",
           "description": "",
@@ -905,7 +917,7 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "[\n    {\n      \"Id\": 1, \n      \"NewsquidUserId\": 7, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"User 1\",\n      \"Email\": \"user1@example.org\",\n      \"Title\": \"Freelance writer\", \n      \"Description\": \"Description of User 1\",\n      \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n      \"FacebookLink\": \"\",\n      \"TwitterLink\": \"\",\n      \"GooglePlusLink\": \"\",\n      \"LinkedInLink\": \"\",\n      \"WebsiteLink\": \"\"\n    },\n    {\n      \"Id\": 3, \n      \"NewsquidUserId\": 23, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"User 3\",\n      \"Email\": \"user3@example.org\",\n      \"Title\": \"Freelance publisher\", \n      \"Description\": \"Description of User 3\",\n      \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n      \"FacebookLink\": \"http://facebook.com/user3\",\n      \"TwitterLink\": \"http://twitter.com/user3\",\n      \"GooglePlusLink\": \"\",\n      \"LinkedInLink\": \"\",\n      \"WebsiteLink\": \"\"\n    }\n]\nA Session resource has the following attributes:\n\n",
+                      "body": "[\n    {\n      \"Id\": 1, \n      \"NewsquidUserId\": 7, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"User 1\",\n      \"Email\": \"user1@example.org\",\n      \"Title\": \"Freelance writer\", \n      \"Description\": \"Description of User 1\",\n      \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n      \"FacebookLink\": \"\",\n      \"TwitterLink\": \"\",\n      \"GooglePlusLink\": \"\",\n      \"LinkedInLink\": \"\",\n      \"WebsiteLink\": \"\"\n    },\n    {\n      \"Id\": 3, \n      \"NewsquidUserId\": 23, \n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"User 3\",\n      \"Email\": \"user3@example.org\",\n      \"Title\": \"Freelance publisher\", \n      \"Description\": \"Description of User 3\",\n      \"ImageUrl\": \"http://www-static.weddingbee.com/pics/36694/head.jpeg\",\n      \"FacebookLink\": \"http://facebook.com/user3\",\n      \"TwitterLink\": \"http://twitter.com/user3\",\n      \"GooglePlusLink\": \"\",\n      \"LinkedInLink\": \"\",\n      \"WebsiteLink\": \"\"\n    }\n]\n",
                       "schema": ""
                     }
                   ]
@@ -913,7 +925,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "UserSessions",
+      "description": "Handles user sessions (sign in/out).\n\nA Session resource has the following attributes:\n\n- **UserId**: (int, required) Unique identifier of the user of which the session is concerned \n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **UpdatedAt**: (datetime, required) The latest time of modification of the resource\n\n- **ExpiresAt**: (datetime, required) The time of expiration of the session. After this time, the user will have to reauthenticate. \n\n- **Token**: (string, required) The token used for authenticating the user \n\nAll attributes are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /users/sessions",
           "description": "",
@@ -980,7 +998,7 @@
                       "name": "204",
                       "description": "",
                       "headers": [],
-                      "body": "# Group Groups\nGroups of collaborating users of the blogging platform.\n\nA Group resource has the following attributes:\n\n",
+                      "body": "",
                       "schema": ""
                     }
                   ]
@@ -988,7 +1006,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "Groups",
+      "description": "Groups of collaborating users of the blogging platform.\n\nA Group resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **UpdatedAt**: (datetime, required) The latest time of modification of the resource\n\n- **Name**: (string, required) The name of the group \n\n- **Description**: (string, optional) A description of the group \n\n- **UserId**: (int, required) Identifier of the user who created the group and therefore owns it \n\nThe attributes *Id*, *CreatedAt*, *UpdatedAt*, and *UserId* are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /groups",
           "description": "",
@@ -1179,7 +1203,7 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "[\n    {\n      \"Id\": 1,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"Group 1 name\",\n      \"Description\": \"Group 1 description\",\n      \"UserId\": \"1\"\n    },\n    {\n      \"Id\": 3,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"Group 3 name\",\n      \"Description\": \"Group 3 description\",\n      \"UserId\": \"1\"\n    }\n]\nA GroupMembership resource has the following attributes:\n\n",
+                      "body": "[\n    {\n      \"Id\": 1,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"Group 1 name\",\n      \"Description\": \"Group 1 description\",\n      \"UserId\": \"1\"\n    },\n    {\n      \"Id\": 3,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Name\": \"Group 3 name\",\n      \"Description\": \"Group 3 description\",\n      \"UserId\": \"1\"\n    }\n]\n",
                       "schema": ""
                     }
                   ]
@@ -1187,7 +1211,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "GroupMemberships",
+      "description": "The connection between groups and users and vice versa.\n\nA GroupMembership resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier\n\n- **Token**: (string, required) A unique token granting permission to accept and reject group invites\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **UpdatedAt**: (datetime, required) The latest time of modification of the resource\n\n- **GroupId**: (int, required) Identifier of the group to which the membership applies\n\n- **InviterId**: (int, required) Identifier of the user who made the invitation\n\n- **InviteeId**: (int) Identifier of the user to which the membership applies\n\n- **InviteeEmail**: (string) Email address to send invitation to\n\n- **Status**: (string, required) The status of the membership. When a \nmembership is first created, the status is \"pending\". When a membership is\naccepted, the status changes to \"active\". Alternatively, an invitation can be rejected by setting the status to \"rejected\".\n\nThe attributes *Id*, *CreatedAt*, *UpdatedAt*, *Token*, *InviterId*, and *Status* are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /groups/memberships",
           "description": "",
@@ -1309,7 +1339,7 @@
                       "name": "204",
                       "description": "",
                       "headers": [],
-                      "body": "# Group ExternalPosts\nExternal posts added by the users of the blogging platform.\n\nAn ExternalPost resource has the following attributes:\n\n",
+                      "body": "",
                       "schema": ""
                     }
                   ]
@@ -1317,7 +1347,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "ExternalPosts",
+      "description": "External posts added by the users of the blogging platform.\n\nAn ExternalPost resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **UpdatedAt**: (datetime, required) The latest time of modification of the resource\n\n- **Url**: (string, required) URL of the external post (article) \n\n- **ImageUrl**: (string, optional) URL of the image of the external post if one exists\n\n- **Title**: (string, required) The title of the external post \n\n- **Teaser**: (string, optional) A teaser text displayed with the external post \n\n- **ExternalPublisherId**: (int, optional) The id of the external publisher\nwhere the external post is published. If no external publisher exists fo the\npost, set this to 0.\n\n- **OwnerId**: (int, required) The is of the user who created and therefore owns the external post\n\nThe attributes *Id*, *CreatedAt*, *UpdatedAt*, and *OwnerId* are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /external/posts",
           "description": "",
@@ -1512,7 +1548,7 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "[\n    {\n      \"Id\": 1,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.example.com/\",\n      \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n      \"Title\": \"New External Post 1 title\",\n      \"Teaser\": \"New External Post 1 teaser\",\n      \"ExternalPublisherId\": \"2\",\n      \"OwnerId\": \"1\"\n    },\n    {\n      \"Id\": 3,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.nytimes.com/article-1\",\n      \"ImageUrl\": \"http://www.shtfpreparedness.com/wp-content/uploads/2013/03/vista-wallpaper-bamboo.jpg\",\n      \"Title\": \"External Post 3 title\",\n      \"Teaser\": \"External Post 3 teaser\",\n      \"ExternalPublisherId\": \"6\",\n      \"OwnerId\": \"1\"\n    }\n]\nAn ExternalPublisher resource has the following attributes:\n\n",
+                      "body": "[\n    {\n      \"Id\": 1,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.example.com/\",\n      \"ImageUrl\": \"http://wakefieldinc.ca/wp-content/uploads/2014/10/bamboo-2.jpg\",\n      \"Title\": \"New External Post 1 title\",\n      \"Teaser\": \"New External Post 1 teaser\",\n      \"ExternalPublisherId\": \"2\",\n      \"OwnerId\": \"1\"\n    },\n    {\n      \"Id\": 3,\n      \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n      \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n      \"Url\": \"http://www.nytimes.com/article-1\",\n      \"ImageUrl\": \"http://www.shtfpreparedness.com/wp-content/uploads/2013/03/vista-wallpaper-bamboo.jpg\",\n      \"Title\": \"External Post 3 title\",\n      \"Teaser\": \"External Post 3 teaser\",\n      \"ExternalPublisherId\": \"6\",\n      \"OwnerId\": \"1\"\n    }\n]\n",
                       "schema": ""
                     }
                   ]
@@ -1520,7 +1556,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "ExternalPublishers",
+      "description": "External publishers referenced by the users of the blogging platform. This can\nbe publishers such as New York times or The Wall Street Journal.\n\nAn ExternalPublisher resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier\n\n- **UserId**: (int, required) The id of the user who registered the publisher\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **UpdatedAt**: (datetime, required) The latest time of modification of the resource\n\n- **Url**: (string, required) URL to the website of the external publisher\n\n- **ImageUrl**: (string, optional) URL to the logo of the external publisher\n\nThe attributes *Id*, *CreatedAt*, and *UpdatedAt* are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /external/publishers",
           "description": "",
@@ -1634,7 +1676,7 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Url\": \"http://www.example.org/\", \n  \"ImageUrl\": \"http://oi60.tinypic.com/2s7yhvt.jpg\"\n}\nAn AbuseReport resource has the following attributes:\n\n",
+                      "body": "{\n  \"Id\": 1, \n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"UpdatedAt\": \"2014-04-14T02:15:15Z\", \n  \"Url\": \"http://www.example.org/\", \n  \"ImageUrl\": \"http://oi60.tinypic.com/2s7yhvt.jpg\"\n}\n",
                       "schema": ""
                     }
                   ]
@@ -1642,7 +1684,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "PostAbuseReports",
+      "description": "Abuse reports targeted posts (articles). If a user believes a post contains\ninappropriate content, the user can report abuse.\n\nAn AbuseReport resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **PostId**: (int, required) The identifier of the post to which the abuse report applies \n\n- **UserId**: (int, required) The identifier of the user who reported the abuse \n\n- **Message**: (string, required) A message explaining how the user believes the post contains inappropriate content\n\nThe attributes *Id*, *CreatedAt*, and *UserId* are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /posts/abuse_reports",
           "description": "",
@@ -1683,7 +1731,7 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"PostId\": 8,\n  \"UserId\": 2,\n  \"Message\": \"Abuse report description\"\n}\nA File resource has the following attributes:\n\n",
+                      "body": "{\n  \"Id\": 1,\n  \"CreatedAt\": \"2014-04-14T02:15:15Z\", \n  \"PostId\": 8,\n  \"UserId\": 2,\n  \"Message\": \"Abuse report description\"\n}\n",
                       "schema": ""
                     }
                   ]
@@ -1691,7 +1739,13 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "Files",
+      "description": "File uploads. Provides a way of getting public accessible URLs to files.\n\nA File resource has the following attributes:\n\n- **Id**: (int, required) Unique identifier\n\n- **CreatedAt**: (datetime, required) The time of creation of the resource\n\n- **ContentType**: (string, required) The content type of the file \n\n- **Url**: (string, required) The public URL of the file \n\nAll attributes are set by the TrunkTrunk API.\n\n\n",
+      "resources": [
         {
           "name": "-> /files",
           "description": "",

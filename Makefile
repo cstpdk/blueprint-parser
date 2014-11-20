@@ -13,7 +13,7 @@ build: .built snowcrash/.built
 
 snowcrash/.built:
 	docker build -t snowcrash snowcrash
-	touch .built
+	touch snowcrash/.built
 
 in/tt_api.%: snowcrash/.built
 	(cd snowcrash && ./run -f json -o tt_api.json -s tt_api.map tt_api.apib)
